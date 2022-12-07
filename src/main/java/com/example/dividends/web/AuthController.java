@@ -1,2 +1,4 @@
-package com.example.dividends.web;public class AuthController {
+package com.example.dividends.web;
+
+public class AuthController {
 }
