@@ -17,6 +17,7 @@ public class TestScheduler {
     // 일정 주기
     public void yahooFinanceScheduling(){
 
+
         // 저장된 회사 목록을 조회
 
 
