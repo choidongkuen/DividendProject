@@ -14,7 +14,7 @@ import java.util.List;
 // 스크래핑 결과를 위한 클래스
 public class ScrapedResult {
 
-    private String Company;
+    private Company company;
     private List<Dividend> dividendEntities;
 
     public ScrapedResult(){

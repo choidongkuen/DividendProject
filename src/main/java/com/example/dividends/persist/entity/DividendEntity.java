@@ -1,6 +1,7 @@
 package com.example.dividends.persist.entity;
 
 
+import com.example.dividends.model.Dividend;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +13,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity(name = "DIVIDEND")
+
+// 외래키 설정
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"companyId", "date"}
+                )
+        }
+)
+
 public class DividendEntity {
 
     @Id
@@ -24,5 +35,12 @@ public class DividendEntity {
     private LocalDateTime date;
 
     private String dividend;
+
+    public DividendEntity(Long companyId, Dividend dividend){
+
+        this.companyId = companyId;
+        this.date = dividend.getDate();
+        this.dividend = dividend.getDividend();
+    }
 
 }
