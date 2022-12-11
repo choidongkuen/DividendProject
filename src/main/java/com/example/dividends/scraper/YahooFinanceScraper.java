@@ -27,7 +27,12 @@ public class YahooFinanceScraper implements Scraper {
     @Override
     public ScrapedResult getScrap(Company company) {
 
+        
+        // ScrapResult 
+        // Company 
+        // List<Dividend>
         ScrapedResult scrapResult = new ScrapedResult();
+        
 
         try {
 
@@ -67,6 +72,7 @@ public class YahooFinanceScraper implements Scraper {
                                       .build()
                 );
             }
+            
             scrapResult.setDividendEntities(dividends);
 
         } catch (IOException e) {
@@ -74,14 +80,14 @@ public class YahooFinanceScraper implements Scraper {
             e.printStackTrace();
 
         }
+        
         return scrapResult;
     }
     @Override
     public Company scrapCompanyByTicker(String ticker) {
 
         String url = String.format(SUMMARY_URL, ticker, ticker);
-
-
+        
         try {
             Document document = Jsoup.connect(url).get();
             Element titleEle = document.getElementsByTag("h1").get(0);
