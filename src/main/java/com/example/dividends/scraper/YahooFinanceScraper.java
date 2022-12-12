@@ -24,6 +24,8 @@ public class YahooFinanceScraper implements Scraper {
     private static final String SUMMARY_URL = "https://finance.yahoo.com/quote/%s?p=%s";
     private static final long START_TIME = 86400;
 
+
+    // 회사 정보를 가지고 배당금 정보 스크래핑하는 메서드
     @Override
     public ScrapedResult getScrap(Company company) {
 
@@ -66,11 +68,9 @@ public class YahooFinanceScraper implements Scraper {
                     throw new RuntimeException("Unexpected Month enum value -> " + splits[0]);
                 }
 
-                dividends.add(Dividend.builder()
-                                      .date(LocalDateTime.of(year, month, day, 0, 0))
-                                      .dividend(dividend)
-                                      .build()
-                );
+                dividends.add(new Dividend(LocalDateTime.of(year,month,day,0,0),
+                        dividend));
+
             }
             
             scrapResult.setDividendEntities(dividends);
@@ -83,6 +83,8 @@ public class YahooFinanceScraper implements Scraper {
         
         return scrapResult;
     }
+
+    // ticker 정보를 가지고 Company 정보 찾는 메소드
     @Override
     public Company scrapCompanyByTicker(String ticker) {
 
@@ -93,11 +95,7 @@ public class YahooFinanceScraper implements Scraper {
             Element titleEle = document.getElementsByTag("h1").get(0);
             String title = titleEle.text().split(" - ")[1].trim();
 
-
-            return Company.builder()
-                          .ticker(ticker)
-                          .name(title)
-                          .build();
+            return new Company(ticker,title);
 
         } catch (IOException e) {
             throw new RuntimeException("Error!");

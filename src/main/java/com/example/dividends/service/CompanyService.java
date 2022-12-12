@@ -4,8 +4,8 @@ package com.example.dividends.service;
 import com.example.dividends.model.Company;
 import com.example.dividends.model.ScrapedResult;
 import com.example.dividends.persist.entity.CompanyEntity;
-import com.example.dividends.persist.entity.repository.CompanyRepository;
 import com.example.dividends.persist.entity.DividendEntity;
+import com.example.dividends.persist.entity.repository.CompanyRepository;
 import com.example.dividends.persist.entity.repository.DividendRepository;
 import com.example.dividends.scraper.Scraper;
 import lombok.Builder;
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -28,7 +27,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Builder
 @Service
-
 
 // Spring Bean -> 싱글 톤
 public class CompanyService {
@@ -39,10 +37,12 @@ public class CompanyService {
 
     private final Trie trie;
 
-    public Company save(String ticker) {
+
+    public Company save(String ticker){
 
         boolean exists = this.companyRepository.existsByTicker(ticker);
-        if (exists) {
+
+        if(exists){
             throw new RuntimeException("already exists ticker -> " + ticker);
         }
 
@@ -58,21 +58,27 @@ public class CompanyService {
         }
 
         // 해당 회사가 존재할 경우, 회상의 배당급 정보를 스크래핑
+        // 회사정보와 배당금 정보
         ScrapedResult scrapedResult = this.yahooFinanceScraper.getScrap(company);
 
         // 스크래핑 결과
         // Company -> CompanyEntity
+        // CompanyEntity 저장
         CompanyEntity companyEntity =
                 this.companyRepository.save(new CompanyEntity(company));
 
+
+        // ScrapedResult (Dividend) -> DividendEntity
 
         List<DividendEntity> dividendEntities =
                 scrapedResult.getDividendEntities().stream()
                              .map(e -> new DividendEntity(companyEntity.getId(), e))
                              .collect(Collectors.toList());
 
+        // DividendEntity 저장
         this.dividendRepository.saveAll(dividendEntities);
         return company;
+
     }
 
     public Page<CompanyEntity> getAllCompanies(Pageable pageable) {
@@ -111,6 +117,7 @@ public class CompanyService {
         Page<CompanyEntity> result
                 = this.companyRepository.findByNameStartingWithIgnoreCase(keyword,limit);
 
+        // 회사 이름만 추출
         return result.stream()
                      .map(e -> e.getName())
                      .collect(Collectors.toList());
