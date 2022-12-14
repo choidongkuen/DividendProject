@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @ToString
 
 
+// UserDetails 구현 => Spring security 의 인증 작업 절차를 받음
 public class MemberEntity implements UserDetails {
 
     @Id
@@ -33,6 +34,7 @@ public class MemberEntity implements UserDetails {
     private String userName;
 
     private String password;
+
     private String roles;
 
     @Override
@@ -47,7 +49,7 @@ public class MemberEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return this.userName;
     }
 
     @Override

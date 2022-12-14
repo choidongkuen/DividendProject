@@ -30,15 +30,19 @@ public class Auth {
 
         private String password;
 
-        private List<String> roles;
+        private String roles;
 
+
+        // SignUp -> MemberEntity
         public MemberEntity toEntity(){
 
-
-            return null;
+            return MemberEntity.builder().
+                               userName(this.username)
+                               .password(this.password)
+                               .roles(this.roles)
+                               .build();
 
         }
-
 
     }
 }
