@@ -25,17 +25,19 @@ public class AuthController {
 
     // 회원 가입
     @PostMapping("/signUp")
-    public ResponseEntity<?> signup(@RequestBody Auth.SignUp request){
+    public ResponseEntity<?> signUp(@RequestBody Auth.SignUp request){
 
         MemberEntity result = memberService.register(request);
         return ResponseEntity.ok(result);
     }
 
     // 로그인
-    @PostMapping("/singIn")
+    @PostMapping("/signIn")
     public ResponseEntity<?> signIn(@RequestBody Auth.SignIn request){
         MemberEntity member = memberService.authentication(request); // 1. 인증
         String token = this.tokenProvider.generateToken(member.getUsername(),member.getRoles()); // 2. 인증 완료시 토큰 발행
+
+        log.info("user login -> " +request.getUsername());
         return ResponseEntity.ok(token);
     }
 }

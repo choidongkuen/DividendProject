@@ -33,9 +33,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = this.resolveTokenFormatter(request);
 
-        if(ObjectUtils.isEmpty(token)){
-            return;
-        }
 
 
         // 토큰의 유효성 검증(만료 기간 체크)
@@ -43,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             Authentication authentication = this.tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
         }
 
         filterChain.doFilter(request,response);

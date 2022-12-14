@@ -1,12 +1,13 @@
 package com.example.dividends.service;
 
 
+import com.example.dividends.exception.impl.NoCompanyException;
 import com.example.dividends.model.Company;
 import com.example.dividends.model.ScrapedResult;
-import com.example.dividends.persist.entity.CompanyEntity;
-import com.example.dividends.persist.entity.DividendEntity;
-import com.example.dividends.persist.entity.repository.CompanyRepository;
-import com.example.dividends.persist.entity.repository.DividendRepository;
+import com.example.dividends.entity.CompanyEntity;
+import com.example.dividends.entity.DividendEntity;
+import com.example.dividends.repository.CompanyRepository;
+import com.example.dividends.repository.DividendRepository;
 import com.example.dividends.scraper.Scraper;
 import lombok.Builder;
 import lombok.Getter;
@@ -123,4 +124,21 @@ public class CompanyService {
                      .collect(Collectors.toList());
     }
 
+    // ticker 정보를 이용한 회사 정보 삭제
+    public String deleteCompany(String ticker) {
+
+
+        // 1. Company 정보 조회
+        CompanyEntity company = companyRepository.findByTicker(ticker)
+                .orElseThrow(() -> new NoCompanyException());
+
+        // 2. Dividend 정보 삭제
+        this.dividendRepository.deleteAllByCompanyId(company.getId());
+        this.companyRepository.delete(company);
+
+        // 3. trie 정보 삭제
+        this.deleteAutoCompleteKeyword(company.getName());
+
+        return company.getName();
+    }
 }

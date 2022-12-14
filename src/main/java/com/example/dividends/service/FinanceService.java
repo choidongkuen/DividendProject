@@ -5,10 +5,10 @@ import com.example.dividends.model.Company;
 import com.example.dividends.model.Dividend;
 import com.example.dividends.model.ScrapedResult;
 import com.example.dividends.model.constants.CacheKey;
-import com.example.dividends.persist.entity.CompanyEntity;
-import com.example.dividends.persist.entity.DividendEntity;
-import com.example.dividends.persist.entity.repository.CompanyRepository;
-import com.example.dividends.persist.entity.repository.DividendRepository;
+import com.example.dividends.entity.CompanyEntity;
+import com.example.dividends.entity.DividendEntity;
+import com.example.dividends.repository.CompanyRepository;
+import com.example.dividends.repository.DividendRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -34,7 +34,6 @@ public class FinanceService {
     // 요청이 자주 들어오는가?
     // 자주 변경되는 데이터 인가?
     // 캐싱 대상이 되는 메소드에 어노테이션 설정
-
 
 
     // Spring boot 에서 캐시 저장 공간을 제공해주며

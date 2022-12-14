@@ -1,6 +1,7 @@
 package com.example.dividends.user.service.Impl;
 
 
+import com.example.dividends.exception.impl.AlreadyExistsUserException;
 import com.example.dividends.model.Auth;
 import com.example.dividends.user.entity.MemberEntity;
 import com.example.dividends.user.repository.MemberRepository;
@@ -39,7 +40,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
         boolean exists = this.memberRepository.existsByUserName(signUp.getUsername());
 
         if(exists){
-            throw new RuntimeException("이미 사용 중인 아이디 입니다.");
+            throw new AlreadyExistsUserException();
         }
 
         // password 같은 민감한 정보는 암호화(encoding) 해서 DB 저장

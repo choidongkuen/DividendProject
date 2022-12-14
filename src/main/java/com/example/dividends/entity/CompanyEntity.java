@@ -1,4 +1,4 @@
-package com.example.dividends.persist.entity;
+package com.example.dividends.entity;
 
 import com.example.dividends.model.Company;
 import lombok.*;

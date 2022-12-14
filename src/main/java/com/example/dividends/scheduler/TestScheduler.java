@@ -4,10 +4,10 @@ package com.example.dividends.scheduler;
 import com.example.dividends.model.Company;
 import com.example.dividends.model.ScrapedResult;
 import com.example.dividends.model.constants.CacheKey;
-import com.example.dividends.persist.entity.CompanyEntity;
-import com.example.dividends.persist.entity.DividendEntity;
-import com.example.dividends.persist.entity.repository.CompanyRepository;
-import com.example.dividends.persist.entity.repository.DividendRepository;
+import com.example.dividends.entity.CompanyEntity;
+import com.example.dividends.entity.DividendEntity;
+import com.example.dividends.repository.CompanyRepository;
+import com.example.dividends.repository.DividendRepository;
 import com.example.dividends.scraper.Scraper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +62,7 @@ public class TestScheduler {
 
                             if (!exists) {
                                 this.dividendRepository.save(e);
+                                log.info("insert new dividiend -> " + e.toString());
                             }
                         });
 
