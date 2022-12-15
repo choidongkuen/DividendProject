@@ -1,6 +1,5 @@
 package com.example.dividends.security;
 
-import com.example.dividends.model.Auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

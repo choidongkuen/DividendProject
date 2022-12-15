@@ -38,6 +38,10 @@ public class CompanyService {
 
     private final Trie trie;
 
+    // 1. ticker 정보 받음(Unique key)
+    // 2. ticker 를 통해 해당 회사가 존재하는지 확인
+    // 3. 존재하지 않는 경우 storeCompanyAndDividend(String ticker) 통해 저장
+
 
     public Company save(String ticker){
 

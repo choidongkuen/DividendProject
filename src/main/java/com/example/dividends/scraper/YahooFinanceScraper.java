@@ -34,7 +34,6 @@ public class YahooFinanceScraper implements Scraper {
         // Company 
         // List<Dividend>
         ScrapedResult scrapResult = new ScrapedResult();
-        
 
         try {
 
