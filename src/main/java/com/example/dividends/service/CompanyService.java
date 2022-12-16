@@ -42,7 +42,7 @@ public class CompanyService {
     // 2. ticker 를 통해 해당 회사가 존재하는지 확인
     // 3. 존재하지 않는 경우 storeCompanyAndDividend(String ticker) 통해 저장
 
-
+    // ticker 정보를 통해 회사 엔티티와 배당금 엔티티 정보를 각 레포에 저장
     public Company save(String ticker){
 
         boolean exists = this.companyRepository.existsByTicker(ticker);
@@ -122,7 +122,7 @@ public class CompanyService {
         Page<CompanyEntity> result
                 = this.companyRepository.findByNameStartingWithIgnoreCase(keyword,limit);
 
-        // 회사 이름만 추출
+        // 회사 이름만 추출(Page -> List)
         return result.stream()
                      .map(e -> e.getName())
                      .collect(Collectors.toList());

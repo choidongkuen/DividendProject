@@ -31,7 +31,7 @@ public class CompanyController {
     }
 
     // 회사 추가
-    @PostMapping("")
+    @PostMapping("/save")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addCompany(@RequestBody Company request){
         String ticker = request.getTicker().trim();
